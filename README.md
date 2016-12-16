@@ -28,7 +28,7 @@ In order for `epcomp` to be executed by SublimeLinter, you must ensure that its 
             "excludes": []
         }
 
-    Note the use of escaped backslashes. Trailing backslases are optional.
+    Note the use of escaped backslashes. Trailing backslashes are optional. Restart Sublime Text for this setting to take effect.
 
 Once you have installed and configured `epcomp`, you can proceed to install the SublimeLinter-contrib-epcomp plugin if it is not yet installed.
 
