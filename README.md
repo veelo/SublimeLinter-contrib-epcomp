@@ -31,12 +31,37 @@ To install via Package Control, do the following:
 ## Settings
 For general information on how SublimeLinter works with settings, please see [Settings][settings]. For information on generic linter settings, please see [Linter Settings][linter-settings].
 
-In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp provides its own settings. Those marked as “Inline Setting” or “Inline Override” may also be [used inline][inline-settings].
+In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp provides its own settings.
 
-|Setting|Description|Inline Setting|Inline Override|
-|:------|:----------|:------------:|:-------------:|
-|foo|Something.|&#10003;| |
-|bar|Something else.| |&#10003;|
+|Setting|Description|
+|:------|:----------|
+|options|A list of options to pass to 'epcomp'.|
+
+### Implementing per-project settings
+Typically you will want to configure the linter with the same options as the compiler, on a per-project basis.
+
+For example, let’s say the interface files of your project are in the subdirectory source\obj:
+
+* If you have not already created a project in Sublime Text, select `Project -> Save Project As...`.
+
+* Select `Project -> Edit Project`.
+
+* At the **top** level of the project’s JSON data, add the following:
+
+        "SublimeLinter":
+        {
+            "linters":
+            {
+                "epcomp":
+                {
+                    "options": ["-i${project}\\source\\obj", "-o${project}\\source\\obj"]
+                }
+            }
+        }
+
+* Save the file.
+
+Any time you edit the project and change a linter’s settings, all open files that use that linter will be re-linted to reflect the new settings.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:

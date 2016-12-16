@@ -18,7 +18,7 @@ class Epcomp(Linter):
     """Provides an interface to epcomp, the Prospero Extended Pascal compiler."""
 
     syntax = 'pascal'
-    cmd = ('C:\\extpas32\\bin\\epcomp.exe', '-y', '-i..\\..\\lib\\obj', '-iobj')
+    executable = 'epcomp.exe'
     regex = r'''(?xi)
         # The first line contains the line number, error code (ignored) and message
         ^\s*(?P<line>\d+)\s+\d+\s+(?P<message>.+)$\r?\n
@@ -35,9 +35,15 @@ class Epcomp(Linter):
     multiline = True
     tempfile_suffix = 'pas'
     error_stream = util.STREAM_STDOUT
-    # defaults = {}
-    # inline_settings = None
-    # inline_overrides = None
+    comment_re = r'\s*[{]'
+
+    def cmd(self):
+        """Return a list with the command line to execute."""
+
+        result = ['epcomp.exe', '-y']
+        for option in self.get_view_settings()["options"]:
+            result += [option.replace('/', '\\')]
+        return result
 
     def split_match(self, match):
         """
