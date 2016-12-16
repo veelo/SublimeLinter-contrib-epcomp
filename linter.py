@@ -37,10 +37,23 @@ class Epcomp(Linter):
     error_stream = util.STREAM_STDOUT
     comment_re = r'\s*[{]'
 
+    @classmethod
+    def reinitialize(cls):
+        """
+        Support customization of the binary path in 'SublimeLinter.sublime-settings'.
+        """
+        epbin = Epcomp.settings()["epbin"]
+        if epbin is not None:
+            if epbin[-1:] is "\\":
+                cls.executable = epbin + cls.executable
+            else:
+                cls.executable = epbin + "\\" + cls.executable
+        cls.initialize()
+
     def cmd(self):
         """Return a list with the command line to execute."""
 
-        result = ['epcomp.exe', '-y']
+        result = [self.executable, '-y']
         for option in self.get_view_settings()["options"]:
             result += [option.replace('/', '\\')]
         return result

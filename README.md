@@ -3,19 +3,28 @@ SublimeLinter-contrib-epcomp
 
 [![Build Status](https://travis-ci.org/SublimeLinter/SublimeLinter-contrib-epcomp.svg?branch=master)](https://travis-ci.org/SublimeLinter/SublimeLinter-contrib-epcomp)
 
-This linter plugin for [SublimeLinter][docs] provides an interface to [epcomp](https://web.archive.org/web/20050305055139/http://www.prosperosoftware.com/e32iw.html), the Prospero Extended Pascal 3.2 compiler. It will be used with files that have the “pascal” syntax.
+This linter plugin for [SublimeLinter][docs] provides an interface to `epcomp`, the [Prospero Extended Pascal][prospero] 3.2 compiler. It will be used with files that have the “pascal” syntax.
 
 ## Installation
 SublimeLinter 3 must be installed in order to use this plugin. If SublimeLinter 3 is not installed, please follow the instructions [here][installation].
 
 ### Linter installation
-Before using this plugin, you must ensure that `Prospero Extended Pascal` is installed on your system. Currently it is not easy to get hold of this legacy commercial compiler, but if you are interested in this linter, you probably already have access to it.
+Before using this plugin, you must ensure that [Prospero Extended Pascal][prospero] is installed on your system. Currently it is not easy to get hold of this legacy commercial compiler, but if you are interested in this linter, you probably already have access to it. The compiler does the linting.
 
 
 **Note:** This plugin requires `epcomp` from Prospero Extended Pascal v3.2.07 or later.
 
 ### Linter configuration
-In order for `epcomp` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. Before going any further, please read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation.
+In order for `epcomp` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. This can be done in two ways.
+1. Read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation. Or:
+1. Select `Tools -> SublimeLinter -> Open User Settings` and locate the `"user": "linter": "epcomp":` section, then add the `"epbin"` entry, like so:
+        "epcomp": {
+            "@disable": false,
+            "args": [],
+            "epbin": "C:\\extpas32\\bin",
+            "excludes": []
+        }
+Note the use of escaped backslashes. Trailing backslases are optional.
 
 Once you have installed and configured `epcomp`, you can proceed to install the SublimeLinter-contrib-epcomp plugin if it is not yet installed.
 
@@ -36,11 +45,12 @@ In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp
 |Setting|Description|
 |:------|:----------|
 |options|A list of options to pass to 'epcomp'.|
+|epbin  |Optional path to the 'epcomp' binary. |
 
 ### Implementing per-project settings
-Typically you will want to configure the linter with the same options as the compiler, on a per-project basis.
+Typically you will want to configure the linter with the same options as the compiler, on a per-project basis. This can be conveniently accomplished in your project settings using [Settings Tokens][settings-tokens].
 
-For example, let’s say the interface files of your project are in the subdirectory source\obj:
+For example, let’s say the interface files of your project are in the subdirectory `source\obj`:
 
 * If you have not already created a project in Sublime Text, select `Project -> Save Project As...`.
 
@@ -81,6 +91,7 @@ Please note that modifications should follow these coding guidelines:
 
 Thank you for helping out!
 
+[prospero]: https://web.archive.org/web/20050305055139/http://www.prosperosoftware.com/e32iw.html
 [docs]: http://sublimelinter.readthedocs.org
 [installation]: http://sublimelinter.readthedocs.org/en/latest/installation.html
 [locating-executables]: http://sublimelinter.readthedocs.org/en/latest/usage.html#how-linter-executables-are-located
@@ -89,3 +100,4 @@ Thank you for helping out!
 [settings]: http://sublimelinter.readthedocs.org/en/latest/settings.html
 [linter-settings]: http://sublimelinter.readthedocs.org/en/latest/linter_settings.html
 [inline-settings]: http://sublimelinter.readthedocs.org/en/latest/settings.html#inline-settings
+[settings-tokens]: http://www.sublimelinter.com/en/latest/settings.html#settings-tokens
