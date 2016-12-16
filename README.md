@@ -15,16 +15,20 @@ Before using this plugin, you must ensure that [Prospero Extended Pascal][prospe
 **Note:** This plugin requires `epcomp` from Prospero Extended Pascal v3.2.07 or later.
 
 ### Linter configuration
-In order for `epcomp` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. This can be done in two ways.
+In order for `epcomp` to be executed by SublimeLinter, you must ensure that its path is available to SublimeLinter. This can be done in two ways:
+
 1. Read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation. Or:
+
 1. Select `Tools -> SublimeLinter -> Open User Settings` and locate the `"user": "linter": "epcomp":` section, then add the `"epbin"` entry, like so:
+
         "epcomp": {
             "@disable": false,
             "args": [],
             "epbin": "C:\\extpas32\\bin",
             "excludes": []
         }
-Note the use of escaped backslashes. Trailing backslases are optional.
+
+    Note the use of escaped backslashes. Trailing backslases are optional.
 
 Once you have installed and configured `epcomp`, you can proceed to install the SublimeLinter-contrib-epcomp plugin if it is not yet installed.
 
@@ -44,8 +48,8 @@ In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp
 
 |Setting|Description|
 |:------|:----------|
-|options|A list of options to pass to 'epcomp'.|
-|epbin  |Optional path to the 'epcomp' binary. |
+|options|A list of options to pass to `epcomp`.|
+|epbin  |Optional path to the `epcomp` binary. |
 
 ### Implementing per-project settings
 Typically you will want to configure the linter with the same options as the compiler, on a per-project basis. This can be conveniently accomplished in your project settings using [Settings Tokens][settings-tokens].
