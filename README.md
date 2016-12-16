@@ -49,7 +49,7 @@ In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp
 |Setting|Description|
 |:------|:----------|
 |options|A list of options to pass to `epcomp`.|
-|epbin  |Optional path to the `epcomp` binary. |
+|epbin  |Optional path to the `epcomp` binary, see [above](#linter-configuration). Not available as project setting. |
 
 ### Implementing per-project settings
 Typically you will want to configure the linter with the same options as the compiler, on a per-project basis. This can be conveniently accomplished in your project settings using [Settings Tokens][settings-tokens].
