@@ -80,7 +80,11 @@ Any time you edit the project and change a linter’s settings, all open files t
 
 ### Ignoring warnings per-file
 
-To ignore the message `Warning: possible unclosed comment`, add the following line in your code:
+The message `Warning: possible unclosed comment` can be ignored on a global or project level with the following setting:
+
+    "ignore": "possible-unclosed-comment"
+
+The same can be accomplished per individual file by adding the following line in your code:
 
     {[SublimeLinter epcomp-ignore:possible-unclosed-comment]}
 
