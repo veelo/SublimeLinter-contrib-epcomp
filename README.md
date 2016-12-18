@@ -46,10 +46,11 @@ For general information on how SublimeLinter works with settings, please see [Se
 
 In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp provides its own settings.
 
-|Setting|Description|
-|:------|:----------|
-|options|A list of options to pass to `epcomp`.|
-|epbin  |Optional path to the `epcomp` binary, see [above](#linter-configuration). Not available as project setting. |
+|Setting|Description|Inline Setting|
+|:------|:----------|:------------:|
+|options|A list of options to pass to `epcomp`.| |
+|epbin  |Optional path to the `epcomp` binary, see [above](#linter-configuration). Not available as project setting. | |
+|ignore |Ignore warnings. Supported value: `possible-unclosed-comment`.|&#10003;|
 
 ### Implementing per-project settings
 Typically you will want to configure the linter with the same options as the compiler, on a per-project basis. This can be conveniently accomplished in your project settings using [Settings Tokens][settings-tokens].
@@ -76,6 +77,17 @@ For example, let’s say the interface files of your project are in the subdirec
 * Save the file.
 
 Any time you edit the project and change a linter’s settings, all open files that use that linter will be re-linted to reflect the new settings.
+
+### Ignoring warnings per-file
+
+To ignore the message `Warning: possible unclosed comment`, add the following line in your code:
+
+    {[SublimeLinter epcomp-ignore:possible-unclosed-comment]}
+
+ or
+
+    {[SublimeLinter epcomp-ignore:282]}
+
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:
