@@ -1,7 +1,7 @@
 SublimeLinter-contrib-epcomp
 ================================
 
-[![Build Status](https://travis-ci.org/SublimeLinter/SublimeLinter-contrib-epcomp.svg?branch=master)](https://travis-ci.org/SublimeLinter/SublimeLinter-contrib-epcomp)
+[![Build Status](https://travis-ci.org/veelo/SublimeLinter-contrib-epcomp.svg?branch=master)](https://travis-ci.org/veelo/SublimeLinter-contrib-epcomp)
 
 This linter plugin for [SublimeLinter][docs] provides an interface to `epcomp`, the [Prospero Extended Pascal][prospero] 3.2 compiler. It will be used with files that have the “pascal” syntax.
 
