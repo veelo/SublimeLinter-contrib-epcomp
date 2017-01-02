@@ -43,9 +43,8 @@ class Epcomp(Linter):
 
     @classmethod
     def reinitialize(cls):
-        """
-        Support customization of the binary path in 'SublimeLinter.sublime-settings'.
-        """
+        """Support customization of the binary path in 'SublimeLinter.sublime-settings'."""
+
         epbin = None
         if "epbin" in cls.settings():
             epbin = cls.settings()["epbin"]
@@ -66,12 +65,7 @@ class Epcomp(Linter):
         return result
 
     def split_match(self, match):
-        """
-        Extract and return values from match.
-
-        We override this method to give more precise feedback.
-
-        """
+        """Extract and return values from match. We override this method to give more precise feedback."""
 
         match, line, col, error, warning, message, near = super().split_match(match)
 
