@@ -46,7 +46,9 @@ class Epcomp(Linter):
         """
         Support customization of the binary path in 'SublimeLinter.sublime-settings'.
         """
-        epbin = Epcomp.settings()["epbin"]
+        epbin = None
+        if "epbin" in cls.settings():
+            epbin = cls.settings()["epbin"]
         if epbin is not None:
             if epbin[-1:] is "\\":
                 cls.executable = epbin + cls.executable
