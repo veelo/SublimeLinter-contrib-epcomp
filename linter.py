@@ -48,7 +48,7 @@ class Epcomp(Linter):
         epbin = None
         if "epbin" in cls.settings():
             epbin = cls.settings()["epbin"]
-        if epbin is not None:
+        if epbin is not None and not cls.executable.startswith(epbin):
             if epbin[-1:] is "\\":
                 cls.executable = epbin + cls.executable
             else:
