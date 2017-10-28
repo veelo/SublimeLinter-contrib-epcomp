@@ -3,14 +3,15 @@
 # Linter for SublimeLinter3, a code checking framework for Sublime Text 3
 #
 # Written by Bastiaan Veelo
-# Copyright (c) 2016 Bastiaan Veelo
+# Copyright (c) 2016-2017 Bastiaan Veelo
 #
 # License: MIT
 #
 
 """This module exports the Epcomp plugin class."""
 
-from SublimeLinter.lint import Linter, util
+from SublimeLinter.lint import Linter, util, persist
+from functools import lru_cache
 import re
 
 
@@ -18,7 +19,7 @@ class Epcomp(Linter):
     """Provides an interface to epcomp, the Prospero Extended Pascal compiler."""
 
     syntax = 'pascal'
-    executable = 'epcomp.exe'
+    cmd = 'epcomp.exe'
     regex = r'''(?xi)
         # The first line contains the line number, error code (stored in P<warning>) and message
         ^\s*(?P<line>\d+)\s+(?P<warning>\d+)\s+(?P<message>.+)$\r?\n
@@ -42,23 +43,58 @@ class Epcomp(Linter):
     comment_re = r'\s*[{]'
 
     @classmethod
-    def reinitialize(cls):
-        """Support customization of the binary path in 'SublimeLinter.sublime-settings'."""
+    @lru_cache(maxsize=None)
+    def can_lint(cls, syntax):
+        """
+        Determine if the linter can handle the provided syntax.
+        This is an optimistic determination based on the linter's syntax alone.
+        """
 
-        epbin = None
-        if "epbin" in cls.settings():
-            epbin = cls.settings()["epbin"]
-        if epbin is not None and not cls.executable.startswith(epbin):
-            if epbin[-1:] is "\\":
-                cls.executable = epbin + cls.executable
+        can = False
+        syntax = syntax.lower()
+
+        if cls.syntax:
+            if isinstance(cls.syntax, (tuple, list)):
+                can = syntax in cls.syntax
+            elif cls.syntax == '*':
+                can = True
+            elif isinstance(cls.syntax, str):
+                can = syntax == cls.syntax
             else:
-                cls.executable = epbin + "\\" + cls.executable
-        cls.initialize()
+                can = cls.syntax.match(syntax) is not None
 
-    def cmd(self):
-        """Return a list with the command line to execute."""
+        return can
 
-        result = [self.executable, '-y']
+    def context_sensitive_executable_path(self, cmd):
+        """
+        Calculate the context-sensitive executable path, return a tuple of (have_path, path).
+        """
+
+        global_cmd = util.which(cmd[0])
+        if global_cmd:
+            return True, global_cmd
+
+        local_cmd = None
+        epbin = self.get_view_settings().get('epbin', None)
+        if epbin is not None:
+            if epbin[-1:] is "\\":
+                local_cmd = epbin + cmd[0]
+            else:
+                local_cmd = epbin + "\\" + cmd[0]
+        if util.can_exec(local_cmd):
+            return True, local_cmd
+
+        persist.printf(
+            'WARNING: {} deactivated, cannot locate {} in path or in {}'
+            .format(self.name, cmd[0], epbin)
+        )
+#        return False, cmd
+        return True, None
+
+    def build_cmd(self, cmd=None):
+        """Return a tuple with the command line to execute."""
+
+        result = super().build_cmd(cmd) or self.cmd + ['-y']
         if "options" in self.get_view_settings():
             for option in self.get_view_settings()["options"]:
                 result += [option.replace('/', '\\')]
