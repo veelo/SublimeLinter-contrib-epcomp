@@ -96,7 +96,7 @@ class Epcomp(Linter):
     def build_cmd(self, cmd=None):
         """Return a tuple with the command line to execute."""
 
-        result = super().build_cmd(cmd) or self.cmd + ['-y']
+        result = (super().build_cmd(cmd) or self.cmd) + ['-y']
         if "options" in self.get_view_settings():
             for option in self.get_view_settings()["options"]:
                 result += [option.replace('/', '\\')]
