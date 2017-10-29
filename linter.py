@@ -116,6 +116,8 @@ class Epcomp(Linter):
         if "ignore" in self.get_view_settings():
             if self.get_view_settings()["ignore"] == warning:
                 match = ''
+            if warning in self.get_view_settings()["ignore"]:
+                match = ''
             if self.get_view_settings()["ignore"] == "possible-unclosed-comment" and warning == '282':
                 match = ''
 

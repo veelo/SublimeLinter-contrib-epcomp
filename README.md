@@ -50,7 +50,7 @@ In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp
 |:------|:----------|:------------:|
 |options|A list of options to pass to `epcomp`.| |
 |epbin  |Optional path to the `epcomp` binary, see [above](#linter-configuration). Not available as project setting. | |
-|ignore |Ignore warnings. Supported value: `possible-unclosed-comment`.|&#10003;|
+|ignore |Ignore warnings. Supported values: `"possible-unclosed-comment"` or error codes like: `["282", "283"]`.|&#10003;|
 
 ### Implementing per-project settings
 Typically you will want to configure the linter with the same options as the compiler, on a per-project basis. This can be conveniently accomplished in your project settings using [Settings Tokens][settings-tokens].
