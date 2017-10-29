@@ -47,6 +47,7 @@ class Epcomp(Linter):
     def can_lint(cls, syntax):
         """
         Determine if the linter can handle the provided syntax.
+
         This is an optimistic determination based on the linter's syntax alone.
         """
 
@@ -67,7 +68,9 @@ class Epcomp(Linter):
 
     def context_sensitive_executable_path(self, cmd):
         """
-        Calculate the context-sensitive executable path, return a tuple of (have_path, path).
+        Calculate the context-sensitive executable path.
+
+        Return a tuple of (have_path, path).
         """
 
         global_cmd = util.which(cmd[0])
@@ -88,7 +91,6 @@ class Epcomp(Linter):
             'WARNING: {} deactivated, cannot locate {} in path or in {}'
             .format(self.name, cmd[0], epbin)
         )
-#        return False, cmd
         return True, None
 
     def build_cmd(self, cmd=None):
