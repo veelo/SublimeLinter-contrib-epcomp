@@ -10,18 +10,22 @@
 
 """This module exports the Epcomp plugin class."""
 
-from SublimeLinter.lint import Linter, util, persist
-from functools import lru_cache
+from SublimeLinter.lint import Linter, util
 import re
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Epcomp(Linter):
-    """Provides an interface to epcomp, the Prospero Extended Pascal compiler."""
+    """Provides an interface to the Prospero Extended Pascal compiler."""
 
     syntax = 'pascal'
     cmd = 'epcomp.exe'
     regex = r'''(?xi)
-        # The first line contains the line number, error code (stored in P<warning>) and message
+        # The first line contains the line number,
+        # error code (stored in P<warning>) and message.
         ^\s*(?P<line>\d+)\s+(?P<warning>\d+)\s+(?P<message>.+)$\r?\n
 
         # Maybe extra info follows, preceded by 24 spaces. Record it in P<near>
@@ -43,28 +47,9 @@ class Epcomp(Linter):
     comment_re = r'\s*[{]'
 
     @classmethod
-    @lru_cache(maxsize=None)
-    def can_lint(cls, syntax):
-        """
-        Determine if the linter can handle the provided syntax.
-
-        This is an optimistic determination based on the linter's syntax alone.
-        """
-
-        can = False
-        syntax = syntax.lower()
-
-        if cls.syntax:
-            if isinstance(cls.syntax, (tuple, list)):
-                can = syntax in cls.syntax
-            elif cls.syntax == '*':
-                can = True
-            elif isinstance(cls.syntax, str):
-                can = syntax == cls.syntax
-            else:
-                can = cls.syntax.match(syntax) is not None
-
-        return can
+    def can_lint(cls):
+            """Assume the linter can lint."""
+            return True
 
     def context_sensitive_executable_path(self, cmd):
         """
@@ -72,7 +57,6 @@ class Epcomp(Linter):
 
         Return a tuple of (have_path, path).
         """
-
         global_cmd = util.which(cmd[0])
         if global_cmd:
             return True, global_cmd
@@ -87,7 +71,7 @@ class Epcomp(Linter):
         if util.can_exec(local_cmd):
             return True, local_cmd
 
-        persist.printf(
+        logger.error(
             'WARNING: {} deactivated, cannot locate {} in path or in {}'
             .format(self.name, cmd[0], epbin)
         )
@@ -95,7 +79,6 @@ class Epcomp(Linter):
 
     def build_cmd(self, cmd=None):
         """Return a tuple with the command line to execute."""
-
         result = (super().build_cmd(cmd) or self.cmd) + ['-y']
         if "options" in self.get_view_settings():
             for option in self.get_view_settings()["options"]:
@@ -103,9 +86,13 @@ class Epcomp(Linter):
         return result
 
     def split_match(self, match):
-        """Extract and return values from match. We override this method to give more precise feedback."""
+        """
+        Extract and return values from match.
 
-        match, line, col, error, warning, message, near = super().split_match(match)
+        We override this method to give more precise feedback.
+        """
+        match, line, col, error, warning, message, near = \
+            super().split_match(match)
 
         # Strip the cr at the end of message:
         message = message[:-1]
@@ -118,11 +105,12 @@ class Epcomp(Linter):
                 match = ''
             if warning in self.get_view_settings()["ignore"]:
                 match = ''
-            if self.get_view_settings()["ignore"] == "possible-unclosed-comment" and warning == '282':
+            if self.get_view_settings()["ignore"] == \
+                    "possible-unclosed-comment" and warning == '282':
                 match = ''
 
-        # col marks the end of the word, error contains the complete line of code.
-        # Use this to find the beginning of the word.
+        # col marks the end of the word, error contains the complete line of
+        # code. Use this to find the beginning of the word.
         # col = error[:col].rfind(' ') + 1
         m = re.match(r'.*\W([a-zA-z0-9_]+)$', error[:col])
         if m:
@@ -134,7 +122,8 @@ class Epcomp(Linter):
         if message.startswith('Warning:'):
             error = ''
             warning = message
-            # We could remove the Warning word, but the Linter status line still reports it as "error", so leave it in.
+            # We could remove the Warning word, but the Linter status line
+            # still reports it as "error", so leave it in.
             # message = message[9:]
         else:
             warning = ''
