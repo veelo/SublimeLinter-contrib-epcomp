@@ -19,13 +19,13 @@ In order for `epcomp` to be executed by SublimeLinter, you must ensure that its 
 
 1. Read and follow the steps in [“Finding a linter executable”](http://sublimelinter.readthedocs.org/en/latest/troubleshooting.html#finding-a-linter-executable) through “Validating your PATH” in the documentation. Or:
 
-1. Select `Tools -> SublimeLinter -> Open User Settings` and locate the `"user": "linter": "epcomp":` section, then add the `"epbin"` entry, like so:
+1. Select `Preferences -> Package Settings -> SublimeLinter -> Settings` and insert the `executable` setting in the right pane, similar to:
 
-        "epcomp": {
-            "@disable": false,
-            "args": [],
-            "epbin": "C:\\extpas32\\bin",
-            "excludes": []
+
+        "linters": {
+            "epcomp": {
+                "executable": "C:\\extpas32\\bin\\epcomp.exe"
+            }
         }
 
     Note the use of escaped backslashes. Trailing backslashes are optional. Restart Sublime Text for this setting to take effect.
@@ -48,8 +48,6 @@ In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp
 
 |Setting|Description|Inline Setting|
 |:------|:----------|:------------:|
-|options|A list of options to pass to `epcomp`.| |
-|epbin  |Optional path to the `epcomp` binary, see [above](#linter-configuration). Not available as project setting. | |
 |ignore |Ignore warnings. Supported values: `"possible-unclosed-comment"` or error codes like: `["282", "283"]`.|&#10003;|
 
 ### Implementing per-project settings
@@ -69,7 +67,10 @@ For example, let’s say the interface files of your project are in the subdirec
             {
                 "epcomp":
                 {
-                    "options": ["-i${project}\\source\\obj", "-o${project}\\source\\obj"]
+                    "args": [
+                        "-i${project_path}\\source\\obj",
+                        "-o${project_path}\\source\\obj"
+                    ]
                 }
             }
         }

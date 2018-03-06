@@ -51,40 +51,6 @@ class Epcomp(Linter):
             """Assume the linter can lint."""
             return True
 
-    def context_sensitive_executable_path(self, cmd):
-        """
-        Calculate the context-sensitive executable path.
-
-        Return a tuple of (have_path, path).
-        """
-        global_cmd = util.which(cmd[0])
-        if global_cmd:
-            return True, global_cmd
-
-        local_cmd = None
-        epbin = self.get_view_settings().get('epbin', None)
-        if epbin is not None:
-            if epbin[-1:] is "\\":
-                local_cmd = epbin + cmd[0]
-            else:
-                local_cmd = epbin + "\\" + cmd[0]
-        if util.can_exec(local_cmd):
-            return True, local_cmd
-
-        logger.error(
-            'WARNING: {} deactivated, cannot locate {} in path or in {}'
-            .format(self.name, cmd[0], epbin)
-        )
-        return True, None
-
-    def build_cmd(self, cmd=None):
-        """Return a tuple with the command line to execute."""
-        result = (super().build_cmd(cmd) or self.cmd) + ['-y']
-        if "options" in self.get_view_settings():
-            for option in self.get_view_settings()["options"]:
-                result += [option.replace('/', '\\')]
-        return result
-
     def split_match(self, match):
         """
         Extract and return values from match.
