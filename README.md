@@ -33,7 +33,7 @@ In order for `epcomp` to be executed by SublimeLinter, you must ensure that its 
 Once you have installed and configured `epcomp`, you can proceed to install the SublimeLinter-contrib-epcomp plugin if it is not yet installed.
 
 ### Plugin installation
-Please use [Package Control][pc] to install the linter plugin. This will ensure that the plugin will be updated when new versions are available. If you want to install from source so you can modify the source code, you probably know what you are doing so we won’t cover that here.
+Please use [Package Control][pc] to install the linter plugin. This will ensure that the plugin will be updated when new versions are available. If you want to install from source so you can modify the source code, see [Contributing](#contributing).
 
 To install via Package Control, do the following:
 
@@ -97,11 +97,12 @@ The same can be accomplished per individual file by adding the following line in
 If you would like to contribute enhancements or fixes, please do the following:
 
 1. Fork the plugin repository.
+1. Clone it into Packages (on Windows: `C:\Users\<user>\AppData\Roaming\Sublime Text 3\Packages`).
 1. Hack on a separate topic branch created from the latest `master`.
 1. Commit and push the topic branch.
 1. Make a pull request.
-1. Be patient.  ;-)
 
+You may want to consult the documentation for [creating a linter plugin][creating-linter-plugin].
 Please note that modifications should follow these coding guidelines:
 
 - Indent is 4 spaces.
@@ -121,3 +122,4 @@ Thank you for helping out!
 [linter-settings]: http://sublimelinter.readthedocs.org/en/latest/linter_settings.html
 [inline-settings]: http://sublimelinter.readthedocs.org/en/latest/settings.html#inline-settings
 [settings-tokens]: http://www.sublimelinter.com/en/latest/settings.html#settings-tokens
+[creating-linter-plugin]: http://sublimelinter.readthedocs.io/en/latest/linter_plugin.html
