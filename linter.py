@@ -3,7 +3,7 @@
 # Linter for SublimeLinter3, a code checking framework for Sublime Text 3
 #
 # Written by Bastiaan Veelo
-# Copyright (c) 2016-2017 Bastiaan Veelo
+# Copyright (c) 2016-2018 Bastiaan Veelo
 #
 # License: MIT
 #
@@ -22,7 +22,7 @@ class Epcomp(Linter):
     """Provides an interface to the Prospero Extended Pascal compiler."""
 
     syntax = 'pascal'
-    cmd = 'epcomp.exe'
+    cmd = 'epcomp.exe -y'
     regex = r'''(?xi)
         # The first line contains the line number,
         # error code (stored in P<warning>) and message.
