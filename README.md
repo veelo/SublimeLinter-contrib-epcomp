@@ -53,7 +53,7 @@ In addition to the standard SublimeLinter settings, SublimeLinter-contrib-epcomp
 ### Implementing per-project settings
 Typically you will want to configure the linter with the same options as the compiler, on a per-project basis. This can be conveniently accomplished in your project settings using [Settings Tokens][settings-tokens].
 
-For example, let’s say the interface files of your project are in the subdirectory `source\obj`:
+For example, let’s say the interface files of your project are in the subdirectory `source\obj`, *and* you want to suppress warnings about possible unclosed comments:
 
 * If you have not already created a project in Sublime Text, select `Project -> Save Project As...`.
 
@@ -70,7 +70,8 @@ For example, let’s say the interface files of your project are in the subdirec
                     "args": [
                         "-i${project_path}\\source\\obj",
                         "-o${project_path}\\source\\obj"
-                    ]
+                    ],
+                    "ignore": "possible-unclosed-comment"
                 }
             }
         }
