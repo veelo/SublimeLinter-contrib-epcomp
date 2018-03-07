@@ -43,7 +43,6 @@ class Epcomp(Linter):
     defaults = {
         'ignore': []
     }
-    inline_settings = ('ignore')
     comment_re = r'\s*[{]'
 
     @classmethod
