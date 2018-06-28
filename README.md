@@ -84,7 +84,7 @@ Any time you edit the project and change a linter’s settings, all open files t
 If you would like to contribute enhancements or fixes, please do the following:
 
 1. Fork the plugin repository.
-1. Clone it into Packages (on Windows: `C:\Users\<user>\AppData\Roaming\Sublime Text 3\Packages`).
+1. Clone it into Packages (on Windows: `C:\Users\<user>\AppData\Roaming\Sublime Text 3\Packages\SublimeLinter-contrib-epcomp`).
 1. Hack on a separate topic branch created from the latest `master`.
 1. Commit and push the topic branch.
 1. Make a pull request.
