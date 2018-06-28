@@ -62,7 +62,7 @@ class Epcomp(Linter):
         # Strip the cr at the end of message:
         message = message[:-1]
         if near is not None:
-            message = message + ': ' + near[:-1]
+            message = message + ': ' + near
         near = None
 
         if "ignore" in self.get_view_settings():
