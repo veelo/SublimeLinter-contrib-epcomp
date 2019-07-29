@@ -21,7 +21,9 @@ logger = logging.getLogger(__name__)
 class Epcomp(Linter):
     """Provides an interface to the Prospero Extended Pascal compiler."""
 
-    syntax = 'pascal'
+    defaults = {
+        'selector': 'source.pascal'
+    }
     cmd = 'epcomp.exe -y'
     regex = r'''(?xi)
         # The first line contains the line number,
