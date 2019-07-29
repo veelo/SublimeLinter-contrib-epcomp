@@ -21,9 +21,6 @@ logger = logging.getLogger(__name__)
 class Epcomp(Linter):
     """Provides an interface to the Prospero Extended Pascal compiler."""
 
-    defaults = {
-        'selector': 'source.pascal'
-    }
     cmd = 'epcomp.exe -y'
     regex = r'''(?xi)
         # The first line contains the line number,
@@ -43,14 +40,9 @@ class Epcomp(Linter):
     tempfile_suffix = 'pas'
     error_stream = util.STREAM_STDOUT
     defaults = {
+        'selector': 'source.pascal',
         'ignore': []
     }
-    comment_re = r'\s*[{]'
-
-    @classmethod
-    def can_lint(cls):
-        """Assume the linter can lint."""
-        return True
 
     def split_match(self, match):
         """
