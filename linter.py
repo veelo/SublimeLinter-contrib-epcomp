@@ -49,8 +49,8 @@ class Epcomp(Linter):
 
     @classmethod
     def can_lint(cls):
-            """Assume the linter can lint."""
-            return True
+        """Assume the linter can lint."""
+        return True
 
     def split_match(self, match):
         """
