@@ -21,7 +21,13 @@ logger = logging.getLogger(__name__)
 class Epcomp(Linter):
     """Provides an interface to the Prospero Extended Pascal compiler."""
 
-    cmd = 'epcomp.exe -y'
+    cmd = (
+        'epcomp.exe',
+        '-y',
+        '-e2',
+        '${args}',
+        '${temp_file}'
+    )
     regex = r'''(?xi)
         # The first line contains the line number,
         # error code (stored in P<warning>) and message.
@@ -59,12 +65,12 @@ class Epcomp(Linter):
             message = message + ': ' + near
         near = None
 
-        if "ignore" in self.get_view_settings():
-            if self.get_view_settings()["ignore"] == warning:
+        if "ignore" in self.settings:
+            if self.settings["ignore"] == warning:
                 match = ''
-            if warning in self.get_view_settings()["ignore"]:
+            if warning in self.settings["ignore"]:
                 match = ''
-            if self.get_view_settings()["ignore"] == \
+            if self.settings["ignore"] == \
                     "possible-unclosed-comment" and warning == '282':
                 match = ''
 
