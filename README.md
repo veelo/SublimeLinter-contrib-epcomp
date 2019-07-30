@@ -61,24 +61,19 @@ For example, let’s say the interface files of your project are in the subdirec
 
 * At the **top** level of the project’s JSON data, add the following:
 
-        "SublimeLinter":
-        {
-            "linters":
-            {
-                "epcomp":
-                {
-                    "args": [
-                        "-i${project_path}\\source\\obj",
-                        "-o${project_path}\\source\\obj"
-                    ],
-                    "ignore": "possible-unclosed-comment"
-                }
-            }
+        "settings": {
+            "SublimeLinter.linters.epcomp.args": [
+                "-e2"
+            ], 
+            "SublimeLinter.linters.epcomp.env": {
+        	    "ep": "-i${project_path}\\source\\obj -o${project_path}\\source\\obj"
+            },
+            "SublimeLinter.linters.epcomp.ignore": ["282", "283"]
         }
 
 * Save the file.
 
-Any time you edit the project and change a linter’s settings, all open files that use that linter will be re-linted to reflect the new settings.
+Note that the `-e2` added argument above serves only as an example to add compiler arguments, the linter already adds this particular `-e2` option per default. Any time you edit the project and change a linter’s settings, all open files that use that linter will be re-linted to reflect the new settings.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:
