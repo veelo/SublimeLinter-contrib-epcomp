@@ -73,7 +73,7 @@ For example, let’s say the interface files of your project are in the subdirec
 
 * Save the file.
 
-Note that the `-e2` added argument above serves only as an example to add compiler arguments, the linter already adds this particular `-e2` option per default. Any time you edit the project and change a linter’s settings, all open files that use that linter will be re-linted to reflect the new settings.
+Note that the `-e2` added argument above serves only as an example for how to add compiler arguments, the linter already adds this particular `-e2` option per default. Any time you edit the project and change a linter’s settings, all open files that use that linter will be re-linted to reflect the new settings.
 
 ## Contributing
 If you would like to contribute enhancements or fixes, please do the following:
